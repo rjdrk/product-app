@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { AuthService } from './core/auth.service';
+import { AuthService } from './core/auth/auth.service';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -22,11 +22,11 @@ export class AppComponent implements OnInit {
   }
 
   logout(): void {
-    AuthService.logout();
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 
-  isAuthenticated(): boolean { // Método público para acceder a isAuthenticated()
+  isAuthenticated(): boolean {
     return this.authService.isAuthenticated();
   }
 }

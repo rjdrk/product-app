@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { ProductService } from '../../core/product.service';
+import { ProductService } from '../../core/product/product.service';
 import { Router } from "@angular/router";
-import { AuthService } from "../../core/auth.service";
+import { AuthService } from "../../core/auth/auth.service";
 import { NgFor } from "@angular/common";
 
 @Component({
@@ -16,7 +16,7 @@ export class ProductsComponent implements OnInit {
     currentPage: number = 1;
     limit: number = 10;
 
-    constructor(private productService: ProductService, private router: Router) { }
+    constructor(private productService: ProductService, private router: Router, private authService: AuthService) { }
 
     ngOnInit(): void {
         this.loadProducts();
@@ -27,7 +27,7 @@ export class ProductsComponent implements OnInit {
     }
 
     onLogout() {
-        AuthService.logout();
+        this.authService.logout();
         this.router.navigate(['/login']);
     }
 

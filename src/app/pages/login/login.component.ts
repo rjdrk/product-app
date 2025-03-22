@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { AuthService } from "../../core/auth.service";
+import { AuthService } from "../../core/auth/auth.service";
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 
@@ -13,14 +13,14 @@ import { NgIf } from '@angular/common';
 
 
 export class LoginComponent {
-    email: string = '';
+    username: string = '';
     password: string = '';
     errorMessage: string = '';
 
-    constructor(private router: Router) { }
+    constructor(private router: Router, private authService: AuthService) { }
 
     async login() {
-        const success = await AuthService.login(this.email, this.password);
+        const success = await this.authService.login(this.username, this.password);
         if (success) {
             this.router.navigate(['/products']);
         } else {
