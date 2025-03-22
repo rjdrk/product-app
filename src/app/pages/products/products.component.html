@@ -1,0 +1,18 @@
+<div class="product-list-container">
+    <h1 class="text-center text-2xl font-semibold">Productos</h1>
+    <button (click)="onLogout()" class="mt-4 p-2 bg-red-500 text-white rounded">Cerrar sesión</button>
+    <div class="grid grid-cols-3 gap-4 mt-4">
+        <div *ngFor="let product of products" class="border p-4 rounded">
+            <h2 class="font-semibold">{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <button class="bg-blue-500 text-white rounded p-2 mt-2">Ver</button>
+        </div>
+    </div>
+
+    <!-- Paginación (si es necesario) -->
+    <div class="mt-4">
+        <button (click)="previousPage()" class="p-2 bg-gray-500 text-white rounded">Anterior</button>
+        <span class="mx-2">{{ currentPage }}</span>
+        <button (click)="nextPage()" class="p-2 bg-gray-500 text-white rounded">Siguiente</button>
+    </div>
+</div>
