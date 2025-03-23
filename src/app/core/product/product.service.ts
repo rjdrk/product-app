@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
+import { Observable, from } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -8,23 +9,14 @@ export class ProductService {
     constructor(private apiService: ApiService) { }
 
     // Obtener la lista de productos con paginación
-    async getAllProducts(page: number = 1, limit: number = 10): Promise<any[]> {
-        try {
-            const response = await this.apiService.get('/products', {
-                params: { page, limit },
-            });
-            console.log(response.data);
-            return response.data;
-        } catch (error) {
-            console.error('Error al obtener los productos', error);
-            return [];
-        }
+    getAllProducts(page: number = 1, limit: number = 5): Observable<any> {
+        return from(this.apiService.get(`/productos/?pageNumber=${page}&pageSize=${limit}`));
     }
 
     // Obtener un producto por ID
     async getProductById(id: number): Promise<any> {
         try {
-            const response = await this.apiService.get(`/products/${id}`);
+            const response = await this.apiService.get(`/productos/${id}`);
             return response.data;
         } catch (error) {
             console.error('Error al obtener el producto', error);
@@ -33,35 +25,17 @@ export class ProductService {
     }
 
     // Crear un nuevo producto
-    async createProduct(product: any): Promise<boolean> {
-        try {
-            await this.apiService.post('/products', product);
-            return true;
-        } catch (error) {
-            console.error('Error al crear el producto', error);
-            return false;
-        }
+    createProduct(product: any): Observable<any> {
+        return from(this.apiService.post('/productos', product));
     }
 
     // Actualizar un producto existente
-    async updateProduct(id: number, product: any): Promise<boolean> {
-        try {
-            await this.apiService.put(`/products/${id}`, product);
-            return true;
-        } catch (error) {
-            console.error('Error al actualizar el producto', error);
-            return false;
-        }
+    updateProduct(id: number, product: any): Observable<any> {
+        return from(this.apiService.put(`/productos/${id}`, product));
     }
 
     // Eliminar un producto
-    async deleteProduct(id: number): Promise<boolean> {
-        try {
-            await this.apiService.delete(`/products/${id}`);
-            return true;
-        } catch (error) {
-            console.error('Error al eliminar el producto', error);
-            return false;
-        }
+    deleteProduct(id: number): Observable<any> {
+        return from(this.apiService.delete(`/productos/${id}`));
     }
 }

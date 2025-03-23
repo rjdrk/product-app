@@ -1,0 +1,76 @@
+<div class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50" *ngIf="isModalOpen">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 class="text-xl font-semibold mb-4">
+            {{ isView ? 'Ver Producto' : (isEditing ? 'Editar Producto' : 'Agregar Producto') }}
+        </h2>
+        <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                <input *ngIf="!isView" type="text" formControlName="nombre" class="mt-1 p-2 w-full border rounded-md" />
+                <p *ngIf="isView" class="mt-1 p-2 w-full border rounded-md">{{ productForm.get('nombre')?.value }}</p>
+                <span *ngIf="productForm.controls['nombre'].invalid && productForm.controls['nombre'].touched"
+                    class="text-red-500 text-sm">
+                    Nombre es requerido.
+                </span>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Descripción</label>
+                <textarea *ngIf="!isView" formControlName="descripcion"
+                    class="mt-1 p-2 w-full border rounded-md"></textarea>
+                <p *ngIf="isView" class="mt-1 p-2 w-full border rounded-md">{{ productForm.get('descripcion')?.value }}
+                </p>
+                <span *ngIf="productForm.controls['descripcion'].invalid && productForm.controls['descripcion'].touched"
+                    class="text-red-500 text-sm">
+                    Descripción es requerida.
+                </span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Precio</label>
+                    <input *ngIf="!isView" type="number" formControlName="precio"
+                        class="mt-1 p-2 w-full border rounded-md" />
+                    <p *ngIf="isView" class="mt-1 p-2 w-full border rounded-md">{{ productForm.get('precio')?.value }}
+                    </p>
+                    <span *ngIf="productForm.controls['precio'].invalid && productForm.controls['precio'].touched"
+                        class="text-red-500 text-sm">
+                        Precio es requerido y debe ser mayor a 0.
+                    </span>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Stock</label>
+                    <input *ngIf="!isView" type="number" formControlName="stock"
+                        class="mt-1 p-2 w-full border rounded-md" />
+                    <p *ngIf="isView" class="mt-1 p-2 w-full border rounded-md">{{ productForm.get('stock')?.value }}
+                    </p>
+                    <span *ngIf="productForm.controls['stock'].invalid && productForm.controls['stock'].touched"
+                        class="text-red-500 text-sm">
+                        Stock es requerido y debe ser mayor a 0.
+                    </span>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Estado</label>
+                <select *ngIf="!isView" formControlName="estado" class="mt-1 p-2 w-full border rounded-md">
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
+                <p *ngIf="isView" class="mt-1 p-2 w-full border rounded-md">{{ productForm.get('estado')?.value }}</p>
+            </div>
+            <div class="flex justify-end gap-2">
+                <ng-container *ngIf="isView">
+                    <button type="button" (click)="closeModal()" class="px-4 py-2 bg-red-500 text-white rounded-md">
+                        Cerrar
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="!isView">
+                    <button type="button" (click)="closeModal()" class="px-4 py-2 bg-gray-400 text-white rounded-md">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md">
+                        {{ isEditing ? 'Actualizar' : 'Guardar' }}
+                    </button>
+                </ng-container>
+            </div>
+        </form>
+    </div>
+</div>

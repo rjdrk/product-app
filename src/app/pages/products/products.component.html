@@ -1,18 +1,53 @@
-<div class="product-list-container">
-    <h1 class="text-center text-2xl font-semibold">Productos</h1>
-    <button (click)="onLogout()" class="mt-4 p-2 bg-red-500 text-white rounded">Cerrar sesión</button>
-    <div class="grid grid-cols-3 gap-4 mt-4">
-        <div *ngFor="let product of products" class="border p-4 rounded">
-            <h2 class="font-semibold">{{ product.name }}</h2>
-            <p>{{ product.description }}</p>
-            <button class="bg-blue-500 text-white rounded p-2 mt-2">Ver</button>
-        </div>
+<div class="p-6">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold flex items-center gap-2">
+            📦 Lista de Productos
+        </h2>
+        <button (click)="openProductModalAdd()"
+            class="bg-blue-500 text-white px-4 py-2 flex items-center gap-2 shadow-md hover:bg-blue-600 rounded-md">
+            <mat-icon class="text-lg">add</mat-icon> Agregar Producto
+        </button>
+        <app-product-modal *ngIf="isModalOpen" [isModalOpen]="isModalOpen" [isEditing]="isEditing" [isView]="isView"
+            [productData]="selectedProduct" (close)="closeProductModal()"
+            (save)="saveProduct($event)"></app-product-modal>
     </div>
+    <div class="bg-white shadow-lg rounded-lg p-4">
+        <div *ngFor="let product of products; let i = index"
+            class="py-4 px-4 flex justify-between items-center rounded-lg"
+            [ngClass]="{'bg-gray-100': i % 2 === 0, 'bg-white': i % 2 !== 0}">
+            <div>
+                <p class="text-lg font-semibold text-gray-800">{{ product.nombre }}</p>
+                <p class="text-gray-600 text-sm font-medium"><mat-icon class="text-md">payments</mat-icon> Precio: {{
+                    product.precio}}
+                </p>
+            </div>
+            <div class="flex space-x-3">
+                <button (click)="openProductModalView(product)" matTooltip="Ver producto"
+                    class="bg-blue-500 text-white p-3 shadow-md hover:bg-blue-600 transition-all rounded-md w-12 h-12 flex items-center justify-center">
+                    <mat-icon class="text-lg">visibility</mat-icon>
+                </button>
+                <button (click)="openProductModalEdit(product)" matTooltip="Editar producto"
+                    class="bg-green-500 text-white p-3 shadow-md hover:bg-green-600 transition-all rounded-md w-12 h-12 flex items-center justify-center">
 
-    <!-- Paginación (si es necesario) -->
-    <div class="mt-4">
-        <button (click)="previousPage()" class="p-2 bg-gray-500 text-white rounded">Anterior</button>
-        <span class="mx-2">{{ currentPage }}</span>
-        <button (click)="nextPage()" class="p-2 bg-gray-500 text-white rounded">Siguiente</button>
+                    <mat-icon class="text-lg">check</mat-icon>
+                </button>
+                <button (click)="deleteProduct(product)" matTooltip="Eliminar producto"
+                    class="bg-red-500 text-white p-3 shadow-md hover:bg-red-600 transition-all rounded-md w-12 h-12 flex items-center justify-center">
+
+                    <mat-icon class="text-lg">delete</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="flex justify-center items-center gap-4 mt-6">
+            <button class="bg-gray-300 px-4 py-2 flex items-center gap-1 hover:bg-gray-400 rounded-md"
+                (click)="previousPage()" [disabled]="currentPage === 1">
+                <mat-icon>arrow_back</mat-icon> Anterior
+            </button>
+            <span class="text-gray-700 font-semibold">Página {{ currentPage }} de {{ totalPages }}</span>
+            <button class="bg-gray-300 px-4 py-2 flex items-center gap-1 hover:bg-gray-400 rounded-md"
+                (click)="nextPage()" [disabled]="currentPage === totalPages">
+                Siguiente <mat-icon>arrow_forward</mat-icon>
+            </button>
+        </div>
     </div>
 </div>

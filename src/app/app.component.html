@@ -1,17 +1,31 @@
 <div class="app-container">
   <!-- Verificar si el usuario está autenticado -->
-  <div *ngIf="isAuthenticated(); else loginTemplate">
+  <div *ngIf="isAuthenticated(); else loginTemplate" class="flex h-screen">
     <!-- Si está autenticado, mostramos el contenido -->
-    <nav>
-      <ul class="flex justify-between">
-        <li><a routerLink="/products" class="text-blue-500">Productos</a></li>
-        <li><button (click)="logout()" class="bg-red-500 text-white p-2 rounded">Cerrar sesión</button></li>
-      </ul>
-    </nav>
-
-    <div class="content mt-4">
-      <router-outlet></router-outlet> <!-- Componente cargado por el router -->
+    <aside class="bg-gray-800 text-white w-64 p-4">
+      <nav>
+        <div class="mb-4">
+          <img src="assets/logo.png" alt="Logo" class="w-32 mb-4">
+        </div>
+      </nav>
+    </aside>
+    <div class="flex-1 flex flex-col">
+      <nav class="bg-gray-800 text-white p-4 flex justify-between items-center">
+        <div className="flex items-center gap-2 px-80">
+          <mat-icon class="text-lg">store</mat-icon>
+          <a routerLink="/products" class="text-lg font-bold">Productos</a>
+        </div>
+        <button (click)="logout()"
+          class="bg-red-500 hover:bg-red-700 text-white px-3 py-2 rounded flex items-center gap-2 transition-all">
+          <mat-icon>logout</mat-icon>
+          Cerrar sesión
+        </button>
+      </nav>
+      <div class="content mt-4">
+        <router-outlet></router-outlet>
+      </div>
     </div>
+
   </div>
 
   <!-- Si no está autenticado, mostramos el login -->

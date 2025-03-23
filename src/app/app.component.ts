@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from './core/auth/auth.service';
 import { NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgIf],
+  imports: [RouterOutlet, NgIf, MatIconModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

@@ -7,9 +7,9 @@ import apiService from './axios.config'; // Importa la instancia de Axios
 export class ApiService {
   private axiosInstance = apiService();
 
-  async get(url: string, params?: any) {
+  async get(url: string) {
     try {
-      const response = await this.axiosInstance.get(url, { params });
+      const response = await this.axiosInstance.get(url);
       return response.data;
     } catch (error) {
       console.error(`Error al realizar GET a ${url}:`, error);
@@ -19,7 +19,6 @@ export class ApiService {
 
   async post(url: string, data?: any) {
     try {
-      console.log('data', data);
       const response = await this.axiosInstance.post(url, data);
       return response.data;
     } catch (error) {

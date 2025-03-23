@@ -18,7 +18,6 @@ export class AuthService {
                 username,
                 password,
             });
-            console.log("response", JSON.stringify(response, null, 2));
             if (response && response.token) {
                 this.cookieService.set(this.tokenKey, response.token, 1, '/');
                 return true;
